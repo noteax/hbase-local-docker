@@ -6,8 +6,6 @@ This is the simplified version of HBase for development purposes that uses the l
 * `1.2.6`[(1.2.6/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.2.6/Dockerfile)
 * `1.3.1`, `latest` [(1.3.1/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.3.1./Dockerfile)
 
-[![](https://hbase.apache.org/)](https://hbase.apache.org)
-
 # What is Apache HBase?
 
 Apache HBase™ is the Hadoop database, a distributed, scalable, big data store.
