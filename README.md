@@ -1,4 +1,4 @@
-# hbase-standalone-docker
+# hbase-standalone
 This is the simplified version of HBase for development purposes that uses the local filesystem and embedded zookeeper.
 
 # Supported tags and respective `Dockerfile` links
@@ -24,7 +24,7 @@ Use Apache HBase™ when you need random, realtime read/write access to your Big
 
 ## Connect to HBase container with line client
 
-	$ docker run -it some-hbase hbase shell
+	$ docker exec -it some-hbase bin/hbase shell
 
 ## Where to store data
 
