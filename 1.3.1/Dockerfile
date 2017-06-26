@@ -6,13 +6,15 @@ RUN apk add --no-cache \
     su-exec
 
 ENV HBASE_DATA_DIR=/data
-    
-ARG VERSION=1.3.1
+ENV ZOOKEEPER_QUORUM=zookeeper-host:2181
+ENV HBASE_MANAGES_ZK=false
+
+ARG VERSION=1.2.3
 ARG HBASE_NAME=hbase-$VERSION
 ARG DISTRO_NAME=$HBASE_NAME-bin
 
 RUN set -x \
-    && wget -q "http://www.apache.org/dist/hbase/$VERSION/$DISTRO_NAME.tar.gz" \
+    && wget -q "https://archive.apache.org/dist/hbase/$VERSION/$DISTRO_NAME.tar.gz" \
     && tar -xzf "$DISTRO_NAME.tar.gz" \
     && rm -r "$DISTRO_NAME.tar.gz" \
     && rm $HBASE_NAME/conf/hbase-site.xml

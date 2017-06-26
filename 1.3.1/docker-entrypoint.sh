@@ -10,8 +10,9 @@ if [ ! -f "conf/hbase-site.xml" ]; then
     echo "<?xml-stylesheet type=\"text/xsl\" href=\"configuration.xsl\"?>" >> $CONFIG
     echo "<configuration>" >> $CONFIG
     echo "<property><name>hbase.rootdir</name><value>file://$HBASE_DATA_DIR/hbase</value></property>" >> $CONFIG
-    echo "<property><name>hbase.zookeeper.property.dataDir</name><value>file://$HBASE_DATA_DIR/zookeeper</value></property>" >> $CONFIG
+    echo "<property><name>hbase.zookeeper.quorum</name><value>$ZOOKEEPER_QUORUM</value></property>" >> $CONFIG
     echo "</configuration>" >> $CONFIG
+
 fi
 
 exec "$@"
