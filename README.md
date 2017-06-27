@@ -3,12 +3,9 @@ This is the simplified version of HBase for development purposes that uses the l
 
 # Supported tags and respective `Dockerfile` links
 
-* `1.2.3`[(1.2.3/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.2.3/Dockerfile)
-* `1.2.4`[(1.2.4/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.2.4/Dockerfile)
-* `1.2.5`[(1.2.5/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.2.5/Dockerfile)
 * `1.2.6`[(1.2.6/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.2.6/Dockerfile)
 * `1.3.0`[(1.3.0/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.3.0/Dockerfile)
-* `1.3.1`, `latest` [(1.3.1/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.3.1./Dockerfile)
+* `1.3.1`, `latest` [(1.3.1/Dockerfile)](https://github.com/noteax/hbase-standalone/blob/master/1.3.1/Dockerfile)
 
 # What is Apache HBase?
 
@@ -18,14 +15,17 @@ Use Apache HBase™ when you need random, realtime read/write access to your Big
 
 # How to use this image
 
-Required configurations:
- * -h hostname - parameter to advise master hostname (or 'hostname:' for docker-compose)
- * ZOOKEEPER_QUORUM - environment variable to configure quorum to connect
+## Environment variables:
+
+ * ZOOKEEPER_QUORUM zookeeper quorum to connect (def. zookeeper-host:2181)
+ * MASTER_PORT master port of hbase (def. 16000)  
+ * REGIONSERVER_PORT region port (def. 16020)
+ * REGIONSERVER_HOSTNAME hostname for regionserver (def. localhost)
 
 ## Start a Hbase server instance
 
 	$ docker run -p 2181:2181 zookeeper
-	$ docker run -e "ZOOKEEPER_QUORUM=localhost:2181" -h localhost --name some-hbase -d noteax/hbase-standalone
+	$ docker run -e "ZOOKEEPER_QUORUM=localhost:2181" --name some-hbase -d noteax/hbase-standalone
 
 ## Connect to HBase from an application in another Docker container
 
