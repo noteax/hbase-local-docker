@@ -6,13 +6,10 @@ RUN apk add --no-cache \
     su-exec
 
 ENV HBASE_DATA_DIR=/data
-ENV ZOOKEEPER_QUORUM=zookeeper-host:2181
-ENV HBASE_MANAGES_ZK=false
-ENV MASTER_PORT=16000
+ENV ZOOKEEPER_QUORUM=zookeeper-quorum:2181
 ENV REGIONSERVER_PORT=16020
-ENV REGIONSERVER_HOSTNAME=localhost
 
-ARG VERSION=1.2.6
+ARG VERSION=1.3.1
 ARG HBASE_NAME=hbase-$VERSION
 ARG DISTRO_NAME=$HBASE_NAME-bin
 
@@ -27,8 +24,8 @@ RUN set -x \
 WORKDIR $HBASE_NAME
 VOLUME ["$HBASE_DATA_DIR"]
 
-EXPOSE 16000 16010 16020
+EXPOSE $REGIONSERVER_PORT 16030
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["bin/hbase", "master", "start"]
+CMD ["bin/hbase", "regionserver", "start"]

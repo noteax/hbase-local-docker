@@ -6,11 +6,8 @@ RUN apk add --no-cache \
     su-exec
 
 ENV HBASE_DATA_DIR=/data
-ENV ZOOKEEPER_QUORUM=zookeeper-host:2181
-ENV HBASE_MANAGES_ZK=false
+ENV ZOOKEEPER_QUORUM=zookeeper-quorum:2181
 ENV MASTER_PORT=16000
-ENV REGIONSERVER_PORT=16020
-ENV REGIONSERVER_HOSTNAME=localhost
 
 ARG VERSION=1.3.0
 ARG HBASE_NAME=hbase-$VERSION
@@ -22,12 +19,13 @@ RUN set -x \
     && tar -xzf "$DISTRO_NAME.tar.gz" \
     && rm -r "$DISTRO_NAME.tar.gz" \
     && rm $HBASE_NAME/conf/hbase-site.xml \
+    && rm $HBASE_NAME/conf/regionservers \
     && apk del openssl
 
 WORKDIR $HBASE_NAME
 VOLUME ["$HBASE_DATA_DIR"]
 
-EXPOSE 16000 16010 16020
+EXPOSE $MASTER_PORT 16010
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]

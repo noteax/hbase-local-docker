@@ -17,23 +17,15 @@ Use Apache HBase™ when you need random, realtime read/write access to your Big
 
 ## Environment variables:
 
- * ZOOKEEPER_QUORUM zookeeper quorum to connect (def. zookeeper-host:2181)
- * MASTER_PORT master port of hbase (def. 16000)  
+ * ZOOKEEPER_QUORUM zookeeper quorum to connect (def. zookeeper-quorum:2181)
+ * MASTER_PORT master port of hbase (def. 16000)
  * REGIONSERVER_PORT region port (def. 16020)
- * REGIONSERVER_HOSTNAME hostname for regionserver (def. localhost)
 
-## Start a Hbase server instance
+## Configuration
 
-	$ docker run -p 2181:2181 zookeeper
-	$ docker run -e "ZOOKEEPER_QUORUM=localhost:2181" --name some-hbase -d noteax/hbase-standalone
+Both master and region server requires -h hostname argument (or hostname: in docker-compose) to bind together through zookeeper. See included docker-compose file.
 
-## Connect to HBase from an application in another Docker container
-
-	$ docker run --name some-app --link some-hbase:hbase -d application-that-uses-hbase
-
-## Connect to HBase container with line client
-
-	$ docker exec -it some-hbase bin/hbase shell
+	$ docker-compose up
 
 ## Where to store data
 

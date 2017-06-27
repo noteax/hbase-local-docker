@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  zookeeper:
+    image: zookeeper:3.4.10
+    volumes:
+      - ./data/zookeeper/data:/data
+      - ./data/zookeeper/datalog:/datalog
+    ports:
+      - 2181:2181
+
+  hbase-local-master:
+    image: noteax/hbase-local-master:1.2.6
+    hostname: hbase-local-master
+    volumes:
+      - ./data/hbase-local-master:/data
+    ports:
+      - 16000:16000
+      - 16010:16010
+    environment:
+      - ZOOKEEPER_QUORUM=zookeeper:2181
+    depends_on:
+      - zookeeper
+
+
+  hbase-local-regionserver:
+    image: noteax/hbase-local-regionserver:1.2.6
+    hostname: hbase-local-regionserver
+    volumes:
+      - ./data/hbase-local-regionserver:/data
+    ports:
+      - 16020:16020
+      - 16030:16030
+    environment:
+      - ZOOKEEPER_QUORUM=zookeeper:2181
+    depends_on:
+      - zookeeper
+      - hbase-local-master
