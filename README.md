@@ -19,8 +19,8 @@ Use Apache HBase™ when you need random, realtime read/write access to your Big
 # How to use this image
 
 Required configurations:
- -h hostname - parameter to advise master hostname (or 'hostname:' for docker-compose)
- ZOOKEEPER_QUORUM - environment variable to configure quorum to connect
+ * -h hostname - parameter to advise master hostname (or 'hostname:' for docker-compose)
+ * ZOOKEEPER_QUORUM - environment variable to configure quorum to connect
 
 ## Start a Hbase server instance
 
