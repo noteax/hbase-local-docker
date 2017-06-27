@@ -18,14 +18,14 @@ Use Apache HBase™ when you need random, realtime read/write access to your Big
 
 # How to use this image
 
-# Environment variables
-
-ZOOKEEPER_QUORUM - to configure quorum to connect
+Required configurations:
+ -h hostname - parameter to advise master hostname (or 'hostname:' for docker-compose)
+ ZOOKEEPER_QUORUM - environment variable to configure quorum to connect
 
 ## Start a Hbase server instance
 
 	$ docker run -p 2181:2181 zookeeper
-	$ docker run -e "ZOOKEEPER_QUORUM=localhost:2181" --name some-hbase -d noteax/hbase-standalone
+	$ docker run -e "ZOOKEEPER_QUORUM=localhost:2181" -h localhost --name some-hbase -d noteax/hbase-standalone
 
 ## Connect to HBase from an application in another Docker container
 
