@@ -7,7 +7,9 @@ RUN apk add --no-cache \
 
 ENV HBASE_DATA_DIR=/data
 ENV ZOOKEEPER_QUORUM=zookeeper-quorum:2181
+ENV MASTER_HOSTNAME=master-hostname
 ENV MASTER_PORT=16000
+ENV REGIONSERVERS=regionserver1,regionserver2
 
 ARG VERSION=1.3.1
 ARG HBASE_NAME=hbase-$VERSION
