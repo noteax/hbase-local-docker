@@ -1,5 +1,5 @@
 # hbase-local-docker
-This is the simplified version of HBase for development purposes that uses the local filesystem. External Zookeeper required for this image, see [image](https://hub.docker.com/_/zookeeper/).
+This is the simplified version of HBase for development purposes that uses the local filesystem instead of HDFS. External Zookeeper required for this image, see [image](https://hub.docker.com/_/zookeeper/).
 
 # Supported tags and respective `Dockerfile` links
 
@@ -17,16 +17,19 @@ Use Apache HBase™ when you need random, realtime read/write access to your Big
 
 ## Environment variables:
 
- * ZOOKEEPER_QUORUM zookeeper quorum to connect (def. zookeeper-quorum:2181)
- * MASTER_PORT master port of hbase (def. 16000)
- * REGIONSERVER_PORT region port (def. 16020)
+ ## Master
+  - MASTER_HOSTNAME - master hostname advise, should match with container name
+  - ZOOKEEPER_QUORUM - zookeeper quorum
+ ## Regionserver
+  - REGIONSERVER_HOSTNAME - regionserver hostname advise, should match with container name
+  - ZOOKEEPER_QUORUM - zookeeper quorum
 
-## Configuration
+## Example
 
-Both master and region server requires -h hostname advise (or hostname: in docker-compose) to bind together through zookeeper. See included docker-compose file.
+You could use preconfigured master/regionserver/zookeeper example:
 
 	$ docker-compose up
 
 ## Where to store data
 
-This image is configured with volume at `/data` to hold the HBase files.
+Both master/regionserver use `/data` folder to store data, make sure that both paths mapped as volumes into single shared directory.
