@@ -1,4 +1,4 @@
-# hbase-standalone
+# hbase-local-docker
 This is the simplified version of HBase for development purposes that uses the local filesystem. External Zookeeper required for this image, see [image](https://hub.docker.com/_/zookeeper/).
 
 # Supported tags and respective `Dockerfile` links
@@ -23,7 +23,7 @@ Use Apache HBase™ when you need random, realtime read/write access to your Big
 
 ## Configuration
 
-Both master and region server requires -h hostname argument (or hostname: in docker-compose) to bind together through zookeeper. See included docker-compose file.
+Both master and region server requires -h hostname advise (or hostname: in docker-compose) to bind together through zookeeper. See included docker-compose file.
 
 	$ docker-compose up
 
