@@ -10,29 +10,29 @@ services:
     ports:
       - 2181:2181
 
-  hbase-local-master:
-    image: noteax/hbase-local-master:1.2.6
+  hbase-master-local:
+    image: noteax/hbase-master-local:1.2.6
     volumes:
       - ./data/hbase:/data
     ports:
       - 16000:16000
       - 16010:16010
     environment:
-      - MASTER_HOSTNAME=hbase-local-master
+      - MASTER_HOSTNAME=hbase-master-local
       - ZOOKEEPER_QUORUM=zookeeper:2181
       - REGIONSERVERS=hbase-local-regionserver
     depends_on:
       - zookeeper
 
-  hbase-local-regionserver:
-    image: noteax/hbase-local-regionserver:1.2.6
+  hbase-regionserver-local:
+    image: noteax/hbase-regionserver-local:1.2.6
     volumes:
       - ./data/hbase:/data
     ports:
       - 16020:16020
       - 16030:16030
     environment:
-      - REGIONSERVER_HOSTNAME=hbase-local-regionserver
+      - REGIONSERVER_HOSTNAME=hbase-regionserver-local
       - ZOOKEEPER_QUORUM=zookeeper:2181
     depends_on:
       - zookeeper
