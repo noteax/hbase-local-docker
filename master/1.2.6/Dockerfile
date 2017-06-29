@@ -3,7 +3,10 @@ MAINTAINER Aidar Bariev <aidarbariev@gmail.com>
 
 RUN apk add --no-cache \
     bash \
-    su-exec
+    su-exec \
+    zlib \
+    gzip \
+    snappy
 
 ENV HBASE_DATA_DIR=/data
 ENV ZOOKEEPER_QUORUM=zookeeper-quorum:2181
@@ -21,8 +24,15 @@ RUN set -x \
     && tar -xzf "$DISTRO_NAME.tar.gz" \
     && rm -r "$DISTRO_NAME.tar.gz" \
     && rm $HBASE_NAME/conf/hbase-site.xml \
-    && rm $HBASE_NAME/conf/regionservers \
+    && rm $HBASE_NAME/conf/regionservers
+
+RUN set -x \
+    && wget -q "https://github.com/noteax/hbase-local-docker/raw/master/libhadoop.so" \
+    && mkdir /hadoop-native \
+    && mv libhadoop.so /hadoop-native \
     && apk del openssl
+
+ENV LD_LIBRARY_PATH=/hadoop-native:/usr/lib
 
 WORKDIR $HBASE_NAME
 VOLUME ["$HBASE_DATA_DIR"]

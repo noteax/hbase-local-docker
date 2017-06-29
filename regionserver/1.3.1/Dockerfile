@@ -19,8 +19,15 @@ RUN set -x \
     && wget -q "https://archive.apache.org/dist/hbase/$VERSION/$DISTRO_NAME.tar.gz" \
     && tar -xzf "$DISTRO_NAME.tar.gz" \
     && rm -r "$DISTRO_NAME.tar.gz" \
-    && rm $HBASE_NAME/conf/hbase-site.xml \
+    && rm $HBASE_NAME/conf/hbase-site.xml
+
+RUN set -x \
+    && wget -q "https://github.com/noteax/hbase-local-docker/raw/master/libhadoop.so" \
+    && mkdir /hadoop-native \
+    && mv libhadoop.so /hadoop-native \
     && apk del openssl
+
+ENV LD_LIBRARY_PATH=/hadoop-native:/usr/lib
 
 WORKDIR $HBASE_NAME
 VOLUME ["$HBASE_DATA_DIR"]
