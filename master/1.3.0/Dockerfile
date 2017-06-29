@@ -1,12 +1,13 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:8
 MAINTAINER Aidar Bariev <aidarbariev@gmail.com>
 
-RUN apk add --no-cache \
-    bash \
-    su-exec \
-    zlib \
-    gzip \
-    snappy
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		bzip2 \
+		zlib1g \
+		gzip \
+		libsnappy1 \
+	&& rm -rf /var/lib/apt/lists/*
+
 
 ENV HBASE_DATA_DIR=/data
 ENV ZOOKEEPER_QUORUM=zookeeper-quorum:2181
@@ -19,7 +20,6 @@ ARG HBASE_NAME=hbase-$VERSION
 ARG DISTRO_NAME=$HBASE_NAME-bin
 
 RUN set -x \
-    && apk --no-cache add openssl \
     && wget -q "https://archive.apache.org/dist/hbase/$VERSION/$DISTRO_NAME.tar.gz" \
     && tar -xzf "$DISTRO_NAME.tar.gz" \
     && rm -r "$DISTRO_NAME.tar.gz" \
@@ -29,10 +29,9 @@ RUN set -x \
 RUN set -x \
     && wget -q "https://github.com/noteax/hbase-local-docker/raw/master/libhadoop.so" \
     && mkdir /hadoop-native \
-    && mv libhadoop.so /hadoop-native \
-    && apk del openssl
+    && mv libhadoop.so /hadoop-native
 
-ENV LD_LIBRARY_PATH=/hadoop-native:/usr/lib
+ENV LD_LIBRARY_PATH=/hadoop-native:/usr/lib:/usr/local/lib
 
 WORKDIR $HBASE_NAME
 VOLUME ["$HBASE_DATA_DIR"]
